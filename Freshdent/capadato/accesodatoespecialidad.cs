@@ -16,20 +16,19 @@ namespace capadato
         int indicador = 0;
         SqlDataReader dr = null;
         List<especialidad> Listaespecialidad = null;
+
         public int insertarespecialidad(especialidad esp)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
-                cm = new SqlCommand("especialidad", cnx);
+                cm = new SqlCommand("especialidades", cnx);
                 cm.Parameters.AddWithValue("@b", 1);
                 cm.Parameters.AddWithValue("@codespecialidad", "");
                 cm.Parameters.AddWithValue("@nombrespecialidad", esp.nombrespecialidad);
                 cm.Parameters.AddWithValue("@descespecialidad", esp.descespecialidad);
                 cm.Parameters.AddWithValue("@idcita", esp.idcita);
                
-
-
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -45,21 +44,19 @@ namespace capadato
                 cm.Connection.Close();
             }
             return indicador;
-
         }
+
         public List<especialidad> Listarespecialidad()
         {
             try
             {
-                cm = new SqlCommand("paciente", cnx);
-                cm.Parameters.AddWithValue("@b", 1);
+                cm = new SqlCommand("especialidades", cnx);
+                cm.Parameters.AddWithValue("@b", 3);
                 cm.Parameters.AddWithValue("codespecialidad", "");
                 cm.Parameters.AddWithValue("@nombrespecialidad", "");
                 cm.Parameters.AddWithValue("@descespecialidad", "");
                 cm.Parameters.AddWithValue("@idcita", "");
               
-
-
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
@@ -69,11 +66,10 @@ namespace capadato
                 {
                     especialidad esp = new especialidad();
                     esp.codespecialidad = Convert.ToInt32(dr["codespecialidad"].ToString());
-                    esp.nombrespecialidad = Convert.ToString(dr["nombrespecialidad"].ToString());
-                    esp.descespecialidad = Convert.ToString(dr["descespecialidad"].ToString());
+                    esp.nombrespecialidad = dr["nombrespecialidad"].ToString();
+                    esp.descespecialidad = dr["descespecialidad"].ToString();
                     esp.idcita= Convert.ToInt32(dr["idcita"].ToString());
-
-
+                    
                     Listaespecialidad.Add(esp);
                 }
             }
@@ -82,28 +78,26 @@ namespace capadato
                 e.Message.ToString();
                 Listaespecialidad = null;
             }
-
             finally
             {
                 cm.Connection.Close();
             }
             return Listaespecialidad;
         }
+
         public int eliminarespecialidad(int codespecialidad)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("especialidad", cnx);
+                cm = new SqlCommand("especialidades", cnx);
                 cm.Parameters.AddWithValue("@b", 2);
                 cm.Parameters.AddWithValue("codespecialidad", codespecialidad);
                 cm.Parameters.AddWithValue("@nombrespecialidad", "");
                 cm.Parameters.AddWithValue("@descespecialidad", "");
                 cm.Parameters.AddWithValue("@idcita", "");
-
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -126,14 +120,13 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("especialidades", cnx);
                 cm.Parameters.AddWithValue("@b", 4);
                 cm.Parameters.AddWithValue("@codespecialidad", esp.codespecialidad);
-                cm.Parameters.AddWithValue("@nombrespecialidad", esp.nombrespecialidad);
-                cm.Parameters.AddWithValue("@descespecialidad", esp.descespecialidad);
+                cm.Parameters.AddWithValue("@nombrespecialidad", "");
+                cm.Parameters.AddWithValue("@descespecialidad", "");
                 cm.Parameters.AddWithValue("@idcita", esp.idcita);
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -156,12 +149,12 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("comentar", cnx);
+                cm = new SqlCommand("especialidades", cnx);
                 cm.Parameters.AddWithValue("@b", 5);
                 cm.Parameters.AddWithValue("codespecialidad", "");
                 cm.Parameters.AddWithValue("@nombrespecialidad", dato);
                 cm.Parameters.AddWithValue("@descespecialidad", "");
-                cm.Parameters.AddWithValue("@idcita", "");
+                cm.Parameters.AddWithValue("@idcita", dato);
 
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
@@ -174,11 +167,9 @@ namespace capadato
                     esp.nombrespecialidad = Convert.ToString(dr["nombrespecialidad"].ToString());
                     esp.descespecialidad = Convert.ToString(dr["descespecialidad"].ToString());
                     esp.idcita = Convert.ToInt32(dr["idcita"].ToString());
-
-
+                    
                     Listaespecialidad.Add(esp);
                 }
-
             }
             catch (Exception e)
             {

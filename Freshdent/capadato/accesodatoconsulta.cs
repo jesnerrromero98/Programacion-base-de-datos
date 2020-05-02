@@ -4,12 +4,10 @@ using System.Data.SqlClient;
 using capaentidades;
 using System.Data;
 
-
 namespace capadato
 {
     public class accesodatoconsulta
     {
-
         SqlConnection cnx;
         consulta con = new consulta();
         conexion cn = new conexion();
@@ -30,7 +28,6 @@ namespace capadato
                 cm.Parameters.AddWithValue("@idregpaciente", con.idregpaciente);
                 cm.Parameters.AddWithValue("@idcitas", con.idcitas);
        
-
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -46,22 +43,19 @@ namespace capadato
                 cm.Connection.Close();
             }
             return indicador;
-
         }
+
         public List<consulta> Listarconsulta()
         {
             try
             {
-                cm = new SqlCommand("paciente", cnx);
-                cm.Parameters.AddWithValue("@b", 1);
+                cm = new SqlCommand("consulta", cnx);
+                cm.Parameters.AddWithValue("@b", 3);
                 cm.Parameters.AddWithValue("@idconsulta", "");
                 cm.Parameters.AddWithValue("@tipoconsulta", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
                 cm.Parameters.AddWithValue("@idcitas", "" );
-
-
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
@@ -74,10 +68,7 @@ namespace capadato
                     con.tipoconsulta = Convert.ToString(dr["tipoconsulta"].ToString());
                     con.idregpaciente= Convert.ToInt32(dr["idregpaciente"].ToString()); ;
                     con.idcitas = Convert.ToInt32(dr["idcita"].ToString());
-
-
-
-
+                    
                     Listaconsulta.Add(con);
                 }
             }
@@ -93,13 +84,14 @@ namespace capadato
             }
             return Listaconsulta;
         }
+
         public int eliminarconsulta(int idconsulta)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("cita", cnx);
+                cm = new SqlCommand("consulta", cnx);
                 cm.Parameters.AddWithValue("@b", 2);
                 cm.Parameters.AddWithValue("@idconsulta", idconsulta);
                 cm.Parameters.AddWithValue("@tipoconsulta", "");
@@ -123,17 +115,18 @@ namespace capadato
             }
             return indicador;
         }
-        public int editarconsulTa(consulta con)
+
+        public int editarconsulta(consulta con)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("consulta", cnx);
                 cm.Parameters.AddWithValue("@b", 4);
                 cm.Parameters.AddWithValue("@idconsulta", con.idconsulta);
-                cm.Parameters.AddWithValue("@tipoconsulta", con.tipoconsulta);
-                cm.Parameters.AddWithValue("@idregpaciente", con.idregpaciente);
+                cm.Parameters.AddWithValue("@tipoconsulta", "");
+                cm.Parameters.AddWithValue("@idregpaciente", "");
                 cm.Parameters.AddWithValue("@idcitas", con.idcitas);
 
                 cm.CommandType = CommandType.StoredProcedure;
@@ -152,16 +145,17 @@ namespace capadato
             }
             return indicador;
         }
+
         public List<consulta> buscarconsulta(string dato)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("comentar", cnx);
+                cm = new SqlCommand("consulta", cnx);
                 cm.Parameters.AddWithValue("@b", 5);
-                cm.Parameters.AddWithValue("@idconsulta",dato);
-                cm.Parameters.AddWithValue("@tipoconsulta", "");
+                cm.Parameters.AddWithValue("@idconsulta","");
+                cm.Parameters.AddWithValue("@tipoconsulta", dato);
                 cm.Parameters.AddWithValue("@idregpaciente","");
                 cm.Parameters.AddWithValue("@idcitas", "");
 
@@ -176,12 +170,9 @@ namespace capadato
                     con.tipoconsulta = Convert.ToString(dr["tipoconsulta"].ToString());
                     con.idregpaciente = Convert.ToInt32(dr["idregpaciente"].ToString()); ;
                     con.idcitas = Convert.ToInt32(dr["idcita"].ToString());
-
-
-
+                    
                     Listaconsulta.Add(con);
                 }
-
             }
             catch (Exception e)
             {

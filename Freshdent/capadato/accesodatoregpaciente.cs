@@ -21,7 +21,8 @@ namespace capadato
             try
             {
                 SqlConnection cnx = cn.conectar();
-                cm = new SqlCommand("registro", cnx);
+
+                cm = new SqlCommand("registro_pacientes", cnx);
                 cm.Parameters.AddWithValue("@b", 1);
                 cm.Parameters.AddWithValue("@idcuenta", "");
                 cm.Parameters.AddWithValue("@nombrepac", reg.nombrepac);
@@ -49,14 +50,14 @@ namespace capadato
                 cm.Connection.Close();
             }
             return indicador;
-
         }
+
         public List<registropaciente> Listarpaciente()
         {
             try
             {
-                cm = new SqlCommand("paciente", cnx);
-                cm.Parameters.AddWithValue("@b", 1);
+                cm = new SqlCommand("registro_pacientes", cnx);
+                cm.Parameters.AddWithValue("@b", 3);
                 cm.Parameters.AddWithValue("idregpaciente", "");
                 cm.Parameters.AddWithValue("@nombrepac", "");
                 cm.Parameters.AddWithValue("@apeidopac", "");
@@ -67,8 +68,7 @@ namespace capadato
                 cm.Parameters.AddWithValue("@telefono", "");
                 cm.Parameters.AddWithValue("@edad", "");
                 cm.Parameters.AddWithValue("@cedula", "");
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
@@ -96,7 +96,6 @@ namespace capadato
                 e.Message.ToString();
                 Listapaciente = null;
             }
-
             finally
             {
                 cm.Connection.Close();
@@ -109,7 +108,7 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("registro_pacientes", cnx);
                 cm.Parameters.AddWithValue("@b", 2);
                 cm.Parameters.AddWithValue("idregpaciente", idregpaciente);
                 cm.Parameters.AddWithValue("@nombrepac", "");
@@ -121,8 +120,7 @@ namespace capadato
                 cm.Parameters.AddWithValue("@telefono", "");
                 cm.Parameters.AddWithValue("@edad", "");
                 cm.Parameters.AddWithValue("@cedula", "");
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -139,26 +137,26 @@ namespace capadato
             }
             return indicador;
         }
+
         public int editarpaciente(registropaciente reg)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("registro_pacientes", cnx);
                 cm.Parameters.AddWithValue("@b", 4);
                 cm.Parameters.AddWithValue("idregpaciente", reg.idregpaciente);
-                cm.Parameters.AddWithValue("@nombrepac", reg.nombrepac);
-                cm.Parameters.AddWithValue("@apeidopac", reg.apeidopac);
-                cm.Parameters.AddWithValue("@direccion", reg.direccion);
-                cm.Parameters.AddWithValue("@departamento", reg.departamento);
-                cm.Parameters.AddWithValue("@municipio", reg.municipio);
-                cm.Parameters.AddWithValue("@celular", reg.celular);
-                cm.Parameters.AddWithValue("@telefono", reg.telefono);
-                cm.Parameters.AddWithValue("@edad", reg.edad);
+                cm.Parameters.AddWithValue("@nombrepac", "");
+                cm.Parameters.AddWithValue("@apeidopac", "");
+                cm.Parameters.AddWithValue("@direccion", "");
+                cm.Parameters.AddWithValue("@departamento", "");
+                cm.Parameters.AddWithValue("@municipio", "");
+                cm.Parameters.AddWithValue("@celular", "");
+                cm.Parameters.AddWithValue("@telefono", "");
+                cm.Parameters.AddWithValue("@edad", "");
                 cm.Parameters.AddWithValue("@cedula", reg.cedula);
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -175,29 +173,31 @@ namespace capadato
             }
             return indicador;
         }
+
         public List<registropaciente> buscarpaciente(string dato)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("comentar", cnx);
+                cm = new SqlCommand("registro_paciente", cnx);
                 cm.Parameters.AddWithValue("@b", 5);
                 cm.Parameters.AddWithValue("idregpaciente", "");
                 cm.Parameters.AddWithValue("@nombrepac", dato);
                 cm.Parameters.AddWithValue("@apeidopac", "");
                 cm.Parameters.AddWithValue("@direccion", "");
-                cm.Parameters.AddWithValue("@departamento", dato);
+                cm.Parameters.AddWithValue("@departamento", "");
                 cm.Parameters.AddWithValue("@municipio", "");
                 cm.Parameters.AddWithValue("@celular", "");
                 cm.Parameters.AddWithValue("@telefono", "");
                 cm.Parameters.AddWithValue("@edad", "");
-                cm.Parameters.AddWithValue("@cedula", "");
+                cm.Parameters.AddWithValue("@cedula", dato);
 
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
                 Listapaciente= new List<registropaciente>();
+
                 while (dr.Read())
                 {
                     registropaciente reg = new registropaciente();
@@ -214,7 +214,6 @@ namespace capadato
 
                     Listapaciente.Add(reg);
                 }
-
             }
             catch (Exception e)
             {
@@ -229,6 +228,3 @@ namespace capadato
         }
     }
 }
-    
-    
-

@@ -26,7 +26,7 @@ namespace capanegocio
         }
         public int editarconsulta(consulta co)
         {
-            return con.editarconsulTa(co);
+            return con.editarconsulta(co);
         }
         public List<consulta> buscarconsulta(string dato)
         {

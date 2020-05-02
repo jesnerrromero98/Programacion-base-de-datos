@@ -22,7 +22,7 @@ namespace capadato
             try
             {
                 SqlConnection cnx = cn.conectar();
-                cm = new SqlCommand("recetamedica", cnx);
+                cm = new SqlCommand("reseta", cnx);
                 cm.Parameters.AddWithValue("@b", 1);
                 cm.Parameters.AddWithValue("@idreceta", "");
                 cm.Parameters.AddWithValue("@nombremedicamento", rec.nombremedicamento);
@@ -30,7 +30,6 @@ namespace capadato
                 cm.Parameters.AddWithValue("@indicaciones", rec.indicaciones);
                 cm.Parameters.AddWithValue("@idregpaciente", rec.idregpaciente);
                 
-
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -48,21 +47,19 @@ namespace capadato
             return indicador;
 
         }
+
         public List<recetamedica> Listarrecetamedica()
         {
             try
             {
-                cm = new SqlCommand("receta", cnx);
-                cm.Parameters.AddWithValue("@b", 1);
+                cm = new SqlCommand("reseta", cnx);
+                cm.Parameters.AddWithValue("@b", 3);
                 cm.Parameters.AddWithValue("@idreceta", "");
                 cm.Parameters.AddWithValue("@nombremedicamento", "");
                 cm.Parameters.AddWithValue("@cantidad", "");
                 cm.Parameters.AddWithValue("@indicaciones", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
-
-
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
@@ -77,9 +74,6 @@ namespace capadato
                     rec.indicaciones= Convert.ToString(dr["indicaciones "].ToString());
                     rec.idregpaciente = Convert.ToInt32(dr["idregpaciente"].ToString());
                     
-
-
-
                     Listarecetamedica.Add(rec);
                 }
             }
@@ -88,29 +82,27 @@ namespace capadato
                 e.Message.ToString();
                 Listarecetamedica = null;
             }
-
             finally
             {
                 cm.Connection.Close();
             }
             return Listarecetamedica;
         }
+
         public int eliminarrecetamedica(int idreceta)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("cita", cnx);
+                cm = new SqlCommand("reseta", cnx);
                 cm.Parameters.AddWithValue("@b", 2);
                 cm.Parameters.AddWithValue("@idreceta", idreceta);
                 cm.Parameters.AddWithValue("@nombremedicamento", "");
                 cm.Parameters.AddWithValue("@cantidad", "");
                 cm.Parameters.AddWithValue("@indicaciones", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
-
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -127,18 +119,19 @@ namespace capadato
             }
             return indicador;
         }
+
         public int editarrecetamedica(recetamedica rec)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("reseta", cnx);
                 cm.Parameters.AddWithValue("@b", 4);
                 cm.Parameters.AddWithValue("@idreceta",rec.idreceta);
                 cm.Parameters.AddWithValue("@nombremedicamento", rec.nombremedicamento);
-                cm.Parameters.AddWithValue("@cantidad", rec.cantidad);
-                cm.Parameters.AddWithValue("@indicaciones", rec.indicaciones);
+                cm.Parameters.AddWithValue("@cantidad","");
+                cm.Parameters.AddWithValue("@indicaciones","");
                 cm.Parameters.AddWithValue("@idregpaciente", rec.idregpaciente);
 
                 cm.CommandType = CommandType.StoredProcedure;
@@ -157,24 +150,26 @@ namespace capadato
             }
             return indicador;
         }
+
         public List<recetamedica> buscarrecetamedica(string dato)
         {
             try
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("comentar", cnx);
+                cm = new SqlCommand("reseta", cnx);
                 cm.Parameters.AddWithValue("@b", 5);
-                cm.Parameters.AddWithValue("@idreceta", dato);
-                cm.Parameters.AddWithValue("@nombremedicamento", "");
+                cm.Parameters.AddWithValue("@idreceta", "");
+                cm.Parameters.AddWithValue("@nombremedicamento", dato);
                 cm.Parameters.AddWithValue("@cantidad", "");
-                cm.Parameters.AddWithValue("@indicaciones", "");
+                cm.Parameters.AddWithValue("@indicaciones",dato);
                 cm.Parameters.AddWithValue("@idregpaciente", "");
 
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
                 Listarecetamedica = new List<recetamedica>();
+
                 while (dr.Read())
                 {
                     consulta con = new consulta();
@@ -183,12 +178,9 @@ namespace capadato
                     rec.cantidad = Convert.ToInt32(dr["cantidad"].ToString()); ;
                     rec.indicaciones = Convert.ToString(dr["indicaciones "].ToString());
                     rec.idregpaciente = Convert.ToInt32(dr["idregpaciente"].ToString());
-
-
-
+                    
                     Listarecetamedica.Add(rec);
                 }
-
             }
             catch (Exception e)
             {

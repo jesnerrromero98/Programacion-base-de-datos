@@ -21,7 +21,7 @@ namespace capadato
             try
             {
                 SqlConnection cnx = cn.conectar();
-                cm = new SqlCommand("cita", cnx);
+                cm = new SqlCommand("Cita", cnx);
                 cm.Parameters.AddWithValue("@b", 1);
                 cm.Parameters.AddWithValue("@idcita", "");
                 cm.Parameters.AddWithValue("@nuevascitas", cit.nuevacitas);
@@ -30,7 +30,6 @@ namespace capadato
                 cm.Parameters.AddWithValue("@precio", cit.precio);
                 cm.Parameters.AddWithValue("@idregpaciente", cit.idregpaciente);
             
-
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -52,16 +51,15 @@ namespace capadato
         {
             try
             {
-                cm = new SqlCommand("paciente", cnx);
-                cm.Parameters.AddWithValue("@b", 1);
+                cm = new SqlCommand("Cita", cnx);
+                cm.Parameters.AddWithValue("@b", 3);
                 cm.Parameters.AddWithValue("idcita", "");
                 cm.Parameters.AddWithValue("@nuevascitas", "");
                 cm.Parameters.AddWithValue("@fechacita", "");
                 cm.Parameters.AddWithValue("@horadisponible", "");
                 cm.Parameters.AddWithValue("@precio", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 dr = cm.ExecuteReader();
@@ -76,8 +74,7 @@ namespace capadato
                     cit.horadisponible = Convert.ToDateTime(dr["horadisponible"].ToString());
                     cit.precio = Convert.ToInt32(dr["precio"].ToString());
                     cit.idregpaciente = Convert.ToInt32(dr["idregpaciente"].ToString());
-
-
+                    
                     Listacita.Add(cit);
                 }
             }
@@ -99,7 +96,7 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("cita", cnx);
+                cm = new SqlCommand("Cita", cnx);
                 cm.Parameters.AddWithValue("@b", 2);
                 cm.Parameters.AddWithValue("idcita", idcita);
                 cm.Parameters.AddWithValue("@nuevascitas", "");
@@ -107,9 +104,7 @@ namespace capadato
                 cm.Parameters.AddWithValue("@horadisponible", "");
                 cm.Parameters.AddWithValue("@precio", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
-
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -132,7 +127,7 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("paciente", cnx);
+                cm = new SqlCommand("Cita", cnx);
                 cm.Parameters.AddWithValue("@b", 4);
                 cm.Parameters.AddWithValue("@idcita", cit.idcitas);
                 cm.Parameters.AddWithValue("@nuevascitas", cit.nuevacitas);
@@ -140,8 +135,7 @@ namespace capadato
                 cm.Parameters.AddWithValue("@horadisponible", cit.horadisponible);
                 cm.Parameters.AddWithValue("@precio", cit.precio);
                 cm.Parameters.AddWithValue("@idregpaciente", cit.idregpaciente);
-
-
+                
                 cm.CommandType = CommandType.StoredProcedure;
                 cnx.Open();
                 cm.ExecuteNonQuery();
@@ -164,12 +158,12 @@ namespace capadato
             {
                 SqlConnection cnx = cn.conectar();
 
-                cm = new SqlCommand("comentar", cnx);
+                cm = new SqlCommand("Cita", cnx);
                 cm.Parameters.AddWithValue("@b", 5);
-                cm.Parameters.AddWithValue("idcita", dato);
+                cm.Parameters.AddWithValue("idcita", "");
                 cm.Parameters.AddWithValue("@nuevascitas", "");
-                cm.Parameters.AddWithValue("@fechacita", "");
-                cm.Parameters.AddWithValue("@horadisponible", "");
+                cm.Parameters.AddWithValue("@fechacita", dato);
+                cm.Parameters.AddWithValue("@horadisponible", dato);
                 cm.Parameters.AddWithValue("@precio", "");
                 cm.Parameters.AddWithValue("@idregpaciente", "");
 

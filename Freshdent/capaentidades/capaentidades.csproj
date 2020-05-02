@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cita.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="consulta.cs" />
     <Compile Include="especialidad.cs" />
     <Compile Include="expediente.cs" />
