@@ -29,6 +29,7 @@ NombreMedicamento varchar (30),
 Cantidad int,
 Indicaciones varchar (200)
 );
+
 create table Cita(
 IdCita int primary key identity (1,1),
 NuevaCita datetime DEFAULT GETDATE(),
@@ -41,6 +42,7 @@ IdEspecialidad int
 foreign key (IdEspecialidad) references Especialidad (IdEspecialidad),
 CONSTRAINT Citas UNIQUE (HoraDisponible,Precio,FechaCita)
 );
+
 CREATE TABLE Consulta(
 IdConsulta int primary key identity (1,1),
 TipoConsulta varchar (10),
@@ -77,6 +79,7 @@ IF @b=5
   where Nombre LIKE '%'+@Nombre+'%' 
 END
 go
+
           --Especialidad--
  Create PROCEDURE RegEspecialidad
    @b int ,@IdEspecialidad int , @NombreEspecialidad varchar (50),@DescpEspecialidad  varchar (200)
@@ -95,6 +98,7 @@ IF @b=5
   where NombreEspecialidad LIKE '%'+@NombreEspecialidad+'%' 
 END
 go
+
         --RecetaMedica--
  Create PROCEDURE RegRecetaMdica
    @b int ,@IdReceta int, @NombreMedicamento varchar (30), @Cantidad int, @Indicaciones varchar (200)
